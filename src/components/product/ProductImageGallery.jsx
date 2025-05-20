@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { FiMaximize, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiMaximize, FiChevronLeft, FiChevronRight, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import ImageMagnifier from '../ui/ImageMagnifier';
 
 const ProductImageGallery = ({ 
@@ -16,7 +16,8 @@ const ProductImageGallery = ({
   const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
   const thumbnailsContainerRef = useRef(null);
-  const [showScrollArrows, setShowScrollArrows] = useState(false);
+  const [showHorizontalScrollArrows, setShowHorizontalScrollArrows] = useState(false);
+  const [showVerticalScrollArrows, setShowVerticalScrollArrows] = useState(false);
 
   const selectedImage = useMemo(() => displayImages[currentIndex] || null, [displayImages, currentIndex]);
 
@@ -28,24 +29,29 @@ const ProductImageGallery = ({
   useEffect(() => {
     const checkScroll = () => {
       if (thumbnailsContainerRef.current) {
-        const { scrollWidth, clientWidth } = thumbnailsContainerRef.current;
-        setShowScrollArrows(scrollWidth > clientWidth);
+        const { scrollWidth: hScrollWidth, clientWidth: hClientWidth } = thumbnailsContainerRef.current;
+        setShowHorizontalScrollArrows(hScrollWidth > hClientWidth);
+        const { scrollHeight: vScrollHeight, clientHeight: vClientHeight } = thumbnailsContainerRef.current;
+        setShowVerticalScrollArrows(vScrollHeight > vClientHeight);
       } else {
-        setShowScrollArrows(false);
+        setShowHorizontalScrollArrows(false);
+        setShowVerticalScrollArrows(false);
       }
     };
+
     if (displayImages.length > 0) {
         checkScroll();
-        const timer = setTimeout(checkScroll, 50);
+        const timer = setTimeout(checkScroll, 100);
         window.addEventListener('resize', checkScroll);
         return () => {
             window.removeEventListener('resize', checkScroll);
             clearTimeout(timer);
         }
     } else {
-        setShowScrollArrows(false);
+        setShowHorizontalScrollArrows(false);
+        setShowVerticalScrollArrows(false);
     }
-  }, [displayImages]);
+  }, [displayImages, currentIndex]);
 
 
   const handleThumbnailClick = (index) => {
@@ -65,10 +71,15 @@ const ProductImageGallery = ({
     }
   };
 
-  const scrollThumbnails = (direction) => {
+  const scrollThumbnails = (direction, axis = 'horizontal') => {
     if (thumbnailsContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -120 : 120;
-      thumbnailsContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      if (axis === 'horizontal') {
+        const scrollAmount = direction === 'left' ? -100 : 100;
+        thumbnailsContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      } else {
+        const scrollAmount = direction === 'up' ? -88 : 88;
+        thumbnailsContainerRef.current.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+      }
     }
   };
   
@@ -88,102 +99,108 @@ const ProductImageGallery = ({
 
   if (displayImages.length === 0) { 
     return (
-      <div className={`relative aspect-w-1 aspect-h-1 md:max-w-[500px] max-w-full  rounded-lg overflow-hidden bg-gray-200 ${className}`}>
+      <div className={`relative aspect-w-1 aspect-h-1 w-full md:max-w-[500px] max-w-full rounded-lg overflow-hidden bg-gray-200 ${className}`}>
         <div className="flex items-center justify-center h-full text-gray-400 text-sm">No Image Available</div>
       </div>
     );
   }
   
   return (
-    <div className={className}>
-      <div 
-        className={`relative aspect-w-1 aspect-h-1 md:max-w-[500px] max-w-full rounded-lg overflow-hidden mb-4 group bg-white shadow-inner`}
-      >
-        {!isMainImageLoaded && selectedImage && (
-            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-            </div>
-        )}
-        {selectedImage && (
-            <img
-            src={selectedImage}
-            alt={productTitle || "Selected product view"}
-            className={`w-full h-full object-contain transition-opacity duration-300 ease-in-out 
-                        ${isMainImageLoaded ? 'opacity-100' : 'opacity-0'}`}
-            onLoad={handleMainImageLoad}
-            onError={() => {setIsMainImageLoaded(true);}} 
-            key={selectedImage} 
-            />
-        )}
-         
-        {displayImages.length > 1 && isMainImageLoaded && (
-            <>
-                <button 
-                    className="absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
-                    onClick={(e) => {e.stopPropagation(); selectPreviousImage();}}
-                    title="Previous image" aria-label="Previous image"
-                >
-                    <FiChevronLeft size={20} />
-                </button>
-                <button 
-                    className="absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
-                    onClick={(e) => {e.stopPropagation(); selectNextImage();}}
-                    title="Next image" aria-label="Next image"
-                >
-                    <FiChevronRight size={20} />
-                </button>
-            </>
-        )}
-         <button 
-            className="absolute top-2 right-2 p-1.5 bg-black/30 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer hover:bg-black/50 focus:outline-none"
-            onClick={(e) => {e.stopPropagation(); openZoomModal();}}
-            title="Click to zoom" aria-label="Zoom image"
-            style={{ display: isMainImageLoaded && selectedImage ? 'flex' : 'none' }}
+    <div className={`lg:grid lg:grid-cols-12 lg:gap-x-3 ${className}`}>
+      <div className="lg:col-span-10 relative">
+        <div 
+          className={`relative aspect-w-1 aspect-h-1 w-full md:max-w-[500px] lg:max-w-none max-w-full rounded-lg overflow-hidden mb-4 lg:mb-0 group bg-white shadow-inner`}
         >
-            <FiMaximize size={18} />
-        </button>
+          {!isMainImageLoaded && selectedImage && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+              </div>
+          )}
+          {selectedImage && (
+              <img
+              src={selectedImage}
+              alt={productTitle || "Selected product view"}
+              className={`w-full h-full object-contain transition-opacity duration-300 ease-in-out 
+                          ${isMainImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={handleMainImageLoad}
+              onError={() => {setIsMainImageLoaded(true);}} 
+              key={selectedImage} 
+              />
+          )}
+          
+          {displayImages.length > 1 && isMainImageLoaded && (
+              <>
+                  <button 
+                      className="absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
+                      onClick={(e) => {e.stopPropagation(); selectPreviousImage();}}
+                      title="Previous image" aria-label="Previous image"
+                  >
+                      <FiChevronLeft size={20} />
+                  </button>
+                  <button 
+                      className="absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
+                      onClick={(e) => {e.stopPropagation(); selectNextImage();}}
+                      title="Next image" aria-label="Next image"
+                  >
+                      <FiChevronRight size={20} />
+                  </button>
+              </>
+          )}
+          <button 
+              className="absolute top-2 right-2 p-1.5 bg-black/30 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer hover:bg-black/50 focus:outline-none"
+              onClick={(e) => {e.stopPropagation(); openZoomModal();}}
+              title="Click to zoom" aria-label="Zoom image"
+              style={{ display: isMainImageLoaded && selectedImage ? 'flex' : 'none' }}
+          >
+              <FiMaximize size={18} />
+          </button>
+        </div>
       </div>
       
       {displayImages.length > 0 && (
-        <div className="relative mt-6 md:max-w-[500px] max-w-full">
-            {showScrollArrows && displayImages.length > 4 && (
-                <>
-                    <button 
-                        onClick={() => scrollThumbnails('left')}
-                        className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-1.5 rounded-full shadow-md focus:outline-none ring-1 ring-gray-300 hover:ring-gray-400"
-                        aria-label="Scroll thumbnails left"
-                    >
-                        <FiChevronLeft size={20} className="text-gray-700"/>
-                    </button>
-                    <button 
-                        onClick={() => scrollThumbnails('right')}
-                        className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-1.5 rounded-full shadow-md focus:outline-none ring-1 ring-gray-300 hover:ring-gray-400"
-                        aria-label="Scroll thumbnails right"
-                    >
-                        <FiChevronRight size={20} className="text-gray-700"/>
-                    </button>
-                </>
-            )}
-            <div 
-                ref={thumbnailsContainerRef}
-                className="flex space-x-2 pt-2 sm:space-x-3 overflow-x-auto pb-2 custom-scrollbar justify-center px-8" 
-            >
+        <div className="lg:col-span-2 relative mt-4 lg:mt-0 flex lg:flex-col items-center">
+          {showVerticalScrollArrows && displayImages.length > 4 && (
+            <button 
+                onClick={() => scrollThumbnails('up', 'vertical')} 
+                className="hidden lg:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-1 bg-white/70 hover:bg-white p-1 rounded-full shadow-md z-20" 
+                aria-label="Scroll thumbnails up">
+                <FiChevronUp size={18} className="text-gray-600"/>
+            </button>
+          )}
+          <div 
+              ref={thumbnailsContainerRef}
+              className="flex justify-center lg:flex-col space-x-2 pt-2  mx-2 mt-2 lg:space-x-0 lg:space-y-2 
+                        overflow-x-auto lg:overflow-x-hidden lg:overflow-y-hidden 
+                        pb-2 lg:pb-0 lg:pt-0 lg:max-h-[450px] custom-scrollbar 
+                        lg:justify-start w-full lg:items-center"
+          >
             {displayImages.map((img, index) => (
                 <button
                 key={img + index}
                 onClick={() => handleThumbnailClick(index)}
-                className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-md overflow-hidden border-2 p-0.5 bg-white
-                            transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none
+                className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20  lg:h-20 rounded-md overflow-hidden border-2 p-0.5 bg-white
+                            transition-all duration-200 ease-in-out transform  focus:outline-none
                             ${currentIndex === index ? 'border-accent shadow-md' : 'border-transparent hover:border-gray-300'}`}
                 aria-label={`View image ${index + 1}`}
                 >
-                <img
-                    src={img}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover rounded"
-                />
+                <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover rounded"/>
                 </button>
             ))}
+          </div>
+          {showVerticalScrollArrows && displayImages.length > 4 && (
+            <button 
+                onClick={() => scrollThumbnails('down', 'vertical')} 
+                className="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-1 bg-white/70 hover:bg-white p-1 rounded-full shadow-md z-20" 
+                aria-label="Scroll thumbnails down">
+                <FiChevronDown size={18} className="text-gray-600"/>
+            </button>
+          )}
+
+          {showHorizontalScrollArrows && displayImages.length > 4 && (
+            <div className="lg:hidden flex justify-between items-center w-full mt-2 px-1">
+                <button onClick={() => scrollThumbnails('left', 'horizontal')} className="bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md" aria-label="Scroll thumbnails left"><FiChevronLeft size={18} className="text-gray-700"/></button>
+                <button onClick={() => scrollThumbnails('right', 'horizontal')} className="bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md" aria-label="Scroll thumbnails right"><FiChevronRight size={18} className="text-gray-700"/></button>
             </div>
+          )}
         </div>
       )}
 
