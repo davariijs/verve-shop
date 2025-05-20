@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { FiMaximize, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import ImageMagnifier from '../ui/ImageMagnifier';
 
@@ -8,7 +8,9 @@ const ProductImageGallery = ({
     className,
     productTitle
 }) => {
-  const displayImages = Array.isArray(images) && images.length > 0 ? images : (initialImage ? [initialImage] : []);
+  const displayImages = useMemo(() => {
+    return Array.isArray(images) && images.length > 0 ? images : (initialImage ? [initialImage] : []);
+  }, [images, initialImage]);
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
@@ -16,16 +18,12 @@ const ProductImageGallery = ({
   const thumbnailsContainerRef = useRef(null);
   const [showScrollArrows, setShowScrollArrows] = useState(false);
 
-  const selectedImage = displayImages[currentIndex] || null;
+  const selectedImage = useMemo(() => displayImages[currentIndex] || null, [displayImages, currentIndex]);
 
   useEffect(() => {
-    const firstImageIndex = 0;
-    if (currentIndex !== firstImageIndex || !selectedImage) { 
-        setCurrentIndex(firstImageIndex);
-        setIsMainImageLoaded(false);
-    }
-  }, [images, initialImage]); 
-
+    setCurrentIndex(0);
+    setIsMainImageLoaded(false); 
+  }, [displayImages]);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -45,7 +43,7 @@ const ProductImageGallery = ({
             clearTimeout(timer);
         }
     } else {
-        setShowScrollArrows(false); 
+        setShowScrollArrows(false);
     }
   }, [displayImages]);
 
@@ -87,7 +85,6 @@ const ProductImageGallery = ({
     setCurrentIndex(prevIndex);
     setIsMainImageLoaded(false);
   };
-
 
   if (displayImages.length === 0) { 
     return (
@@ -145,6 +142,7 @@ const ProductImageGallery = ({
             <FiMaximize size={18} />
         </button>
       </div>
+      
       {displayImages.length > 0 && (
         <div className="relative mt-6 md:max-w-[500px] max-w-full">
             {showScrollArrows && displayImages.length > 4 && (
