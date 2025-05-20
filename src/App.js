@@ -1,11 +1,10 @@
 import React from 'react';
-// import './App.css';
-import ProductListPage from './pages/ProductListPage';
+import AppRouter from './routes/AppRouter';
 
 function App() {
   return (
-    <div className="App">
-      <ProductListPage />
+    <div className="App antialiased">
+      <AppRouter />
     </div>
   );
 }
