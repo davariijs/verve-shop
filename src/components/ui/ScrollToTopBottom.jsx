@@ -69,7 +69,8 @@ const ScrollToTopBottom = () => {
       {isVisible && (
         <button
           onClick={isAtVeryBottom ? scrollToTop : scrollToBottom}
-          className={`fixed bottom-6 sm:right-6 right-4 bg-accent text-text-on-accent p-2.5 sm:p-3.5 rounded-full shadow-xl hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75 transition-all duration-300 ease-in-out transform hover:scale-110 z-30
+          className={`fixed bottom-6 sm:right-6 right-4 bg-accent text-text-on-accent p-2.5 sm:p-3.5 rounded-full shadow-xl
+            hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75 transition-all duration-300 ease-in-out transform hover:scale-110 z-30
                       ${isAtVeryBottom ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}
           aria-label={isAtVeryBottom ? "Scroll to top" : "Scroll to bottom"}
           title={isAtVeryBottom ? "Scroll to top" : "Scroll to bottom"}

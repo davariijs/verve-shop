@@ -25,7 +25,8 @@ const NotFoundPage = () => {
         </p>
         <Link
           to="/"
-          className="inline-flex items-center justify-center px-6 py-3 bg-accent text-text-on-accent font-semibold rounded-lg shadow-md hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50 transition-transform transform hover:scale-105"
+          className="inline-flex items-center justify-center px-6 py-3 bg-accent text-text-on-accent font-semibold rounded-lg shadow-md hover:bg-accent-hover
+          focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50 transition-transform transform hover:scale-105"
         >
           <FaHome className="mr-2 -ml-1 h-5 w-5" />
           Go to Homepage

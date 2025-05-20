@@ -28,17 +28,17 @@ const ProductFilters = ({
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               className="block w-full pl-5 pr-1 sm:pr-14 py-3 text-sm text-text-main 
-                         border-none rounded-l-full bg-transparent 
-                         focus:outline-none focus:ring-0"
+                        border-none rounded-l-full bg-transparent 
+                        focus:outline-none focus:ring-0"
             />
             <button
               type="button"
               className="relative -ml-px inline-flex items-center justify-center px-3 sm:px-4 py-3 
-                         bg-accent text-text-on-accent rounded-r-full 
-                         border-none 
-                         hover:bg-accent-hover 
-                         focus:outline-none focus:ring-0
-                         transition-colors"
+                      bg-accent text-text-on-accent rounded-r-full 
+                        border-none 
+                      hover:bg-accent-hover 
+                        focus:outline-none focus:ring-0
+                        transition-colors"
               aria-label="Search"
             >
               <FaSearch className="w-4 h-4 sm:w-5 sm:h-5" />
