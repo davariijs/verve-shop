@@ -1,5 +1,5 @@
 import React from 'react';
-import loadingSpinner from '../../assets/images/spinner.svg';
+const loadingSpinner = `${process.env.PUBLIC_URL}/images/spinner.svg`;
 
 const Spinner = ({ size = 'md' }) => {
   const sizeClasses = {
