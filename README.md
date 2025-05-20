@@ -11,7 +11,6 @@ Welcome to Verve Shop! This is a dynamic and responsive e-commerce front-end app
 *   **Responsive Design:** Adapts attractively to various screen sizes (desktop, tablet, and mobile).
 *   **Smooth Scrolling:** Enhanced user experience with smooth scroll animations for navigation.
 *   **Image Gallery with Zoom:** Interactive image gallery on product detail pages with zoom functionality.
-*   **Skeleton Loading:** Skeletons are shown while product data is being fetched after pagination or filter changes.
 *   **Hero Section:** Engaging hero section on the main page with animations.
 *   **404 Page:** Custom "Page Not Found" page.
 
@@ -22,12 +21,9 @@ Welcome to Verve Shop! This is a dynamic and responsive e-commerce front-end app
 *   **Tailwind CSS:** (v3.4.17) - A utility-first CSS framework for rapid UI development.
 *   **PostCSS** (v8.5.3) & **Autoprefixer** (v10.4.21)
 *   **@tanstack/react-query (React Query):** (v5.76.1) - For data fetching, caching, synchronization, and server state management.
-*   **@tanstack/react-query-devtools:** (v5.76.1) - Devtools for React Query.
 *   **Axios:** (v1.9.0) - Promise-based HTTP client for making API requests.
 *   **React Icons:** (v5.5.0) - A comprehensive library for including popular icons in your React projects.
 *   **use-debounce:** (v10.0.4) - A React hook to debounce a value (used for search input).
-*   **Create React App (`react-scripts` v5.0.1):** Used for project setup and build scripts.
-*   **ESLint:** Configured for code linting based on `react-app` standards.
 
 ## 🚀 Getting Started
 
