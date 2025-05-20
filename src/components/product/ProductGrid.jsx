@@ -22,11 +22,6 @@ const ProductGrid = ({ products, isLoading, totalItems }) => {
 
   return (
     <div>
-      {(!isLoading || products.length > 0) && totalItems > 0 && (
-        <p className="text-sm text-text-secondary mb-4">
-          Showing {products.length} of {totalItems} products.
-        </p>
-      )}
       <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 ${isLoading ? 'opacity-75' : ''}`}>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
