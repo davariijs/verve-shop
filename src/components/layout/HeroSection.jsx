@@ -1,9 +1,9 @@
 import React from 'react';
 
-const image1 = `${process.env.PUBLIC_URL}/images/chanel-coco.webp`;
-const image2 = `${process.env.PUBLIC_URL}/images/iphone.webp`;
-const image3 = `${process.env.PUBLIC_URL}/images/party-glasses.webp`;
-const image4 = `${process.env.PUBLIC_URL}/images/rolex.webp`;
+const chanel = `${process.env.PUBLIC_URL}/images/chanel-coco.webp`;
+const iphone = `${process.env.PUBLIC_URL}/images/iphone.webp`;
+const partyGlasses = `${process.env.PUBLIC_URL}/images/party-glasses.webp`;
+const rolex = `${process.env.PUBLIC_URL}/images/rolex.webp`;
 
 const HeroSection = () => {
   const handleSmoothScrollToProducts = () => {
@@ -52,7 +52,7 @@ const HeroSection = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between py-12 md:py-16 lg:py-20 xl:py-24 relative min-h-[400px] sm:min-h-[450px] lg:min-h-0">
           <div className="lg:w-1/2 xl:w-5/12 text-center lg:text-left mb-10 lg:mb-0 z-20 relative">
             <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-text-on-primary leading-tight">
-               It's Verve Time! <span className="block sm:inline">Unlock Savings</span> Up to <span className="text-yellow-300">-20%</span>*
+              It's Verve Time! <span className="block sm:inline">Unlock Savings</span> Up to <span className="text-yellow-300">-20%</span>*
             </h1>
             <p className="mt-3 sm:mt-4 text-md sm:text-lg text-indigo-100 max-w-md mx-auto lg:mx-0">
               Discover your next favorite!
@@ -72,22 +72,22 @@ const HeroSection = () => {
               <div className="absolute bg-bg-content p-2 rounded-xl shadow-xl transform rotate-[7deg] top-[10%] left-[0%] sm:top-[8%] sm:left-[0%]
                             w-28 h-36 sm:w-32 sm:h-40 md:w-36 md:h-44 lg:w-[140px] lg:h-[180px] z-10
                             group-hover:translate-y-[-3%] group-hover:rotate-[9deg] transition-all duration-300 ease-out delay-100">
-                <img src={image1} alt="Featured Product 1" className="w-full h-full object-contain rounded-md"/>
+                <img src={chanel} alt="Featured Product 1" className="w-full h-full object-contain rounded-md"/>
               </div>
               <div className="absolute bg-bg-content p-2 rounded-xl shadow-xl transform rotate-[-8deg] top-[20%] left-[22%] sm:top-[25%] sm:left-[25%] 
                             w-28 h-36 sm:w-32 sm:h-40 md:w-36 md:h-44 lg:w-[140px] lg:h-[180px] z-30
                             group-hover:translate-y-[3%] group-hover:rotate-[-10deg] transition-all duration-300 ease-out delay-200">
-                <img src={image2} alt="Featured Product 2" className="w-full h-full object-contain rounded-md"/>
+                <img src={iphone} alt="Featured Product 2" className="w-full h-full object-contain rounded-md"/>
               </div>
               <div className="absolute bg-bg-content p-2 rounded-xl shadow-xl transform rotate-[10deg] top-[12%] left-[48%] sm:top-[10%] sm:left-[50%] 
                             w-28 h-36 sm:w-32 sm:h-40 md:w-36 md:h-44 lg:w-[140px] lg:h-[180px] z-20
                             group-hover:translate-y-[-4%] group-hover:rotate-[12deg] transition-all duration-300 ease-out delay-300">
-                <img src={image4} alt="Featured Product 4" className="w-full h-full object-contain rounded-md"/>
+                <img src={rolex} alt="Featured Product 4" className="w-full h-full object-contain rounded-md"/>
               </div>
               <div className="absolute bg-bg-content p-2 rounded-xl shadow-xl transform rotate-[-6deg] top-[25%] left-[70%] sm:top-[28%] sm:left-[75%] 
                             w-28 h-36 sm:w-32 sm:h-40 md:w-36 md:h-44 lg:w-[140px] lg:h-[180px] z-10
                             group-hover:translate-y-[4%] group-hover:rotate-[-8deg] transition-all duration-300 ease-out delay-400">
-                <img src={image3} alt="Featured Product 3" className="w-full h-full object-contain rounded-md"/>
+                <img src={partyGlasses} alt="Featured Product 3" className="w-full h-full object-contain rounded-md"/>
               </div>
             </div>
           </div>
