@@ -2,6 +2,11 @@
 
 Welcome to Verve Shop! This is a dynamic and responsive e-commerce front-end application built to showcase a paginated list of products, individual product detail pages, and client-side filtering & searching capabilities. The project emphasizes a clean, modular codebase and a visually appealing user interface.
 
+## 🌐 Live Demo
+
+Check out the live version of Verve Shop here:
+**[🚀 Launch Verve Shop!](https://verve-shop.netlify.app/)**
+
 ## ✨ Features
 
 *   **Product Listing with Pagination:** Browse products in a paginated view.
