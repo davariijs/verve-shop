@@ -1,98 +1,140 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { FaChevronLeft, FaChevronRight, FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
 const Pagination = ({ currentPage, totalPages, onPageChange, isFetching }) => {
+  const [pageNumbersWindow, setPageNumbersWindow] = useState(5);
+  const [isVerySmallScreen, setIsVerySmallScreen] = useState(false);
+
+  useEffect(() => {
+    const updateScreenSizes = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 340) {
+        setPageNumbersWindow(1); 
+        setIsVerySmallScreen(true);
+      } else if (screenWidth < 640) {
+        setPageNumbersWindow(3);
+        setIsVerySmallScreen(false);
+      } else {
+        setPageNumbersWindow(5);
+        setIsVerySmallScreen(false);
+      }
+    };
+    updateScreenSizes();
+    window.addEventListener('resize', updateScreenSizes);
+    return () => window.removeEventListener('resize', updateScreenSizes);
+  }, []);
+
+
   if (totalPages <= 1) return null;
 
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      onPageChange(currentPage - 1);
+  const handlePageClick = (pageIndex) => {
+    if (pageIndex >= 0 && pageIndex < totalPages && !isFetching) {
+      onPageChange(pageIndex);
     }
   };
 
-  const handleNext = () => {
-    if (currentPage < totalPages - 1) {
-      onPageChange(currentPage + 1);
-    }
-  };
-
-  const pageNumbers = [];
-  const maxPagesToShow = 5;
   let startPage, endPage;
-
-  if (totalPages <= maxPagesToShow) {
+  if (totalPages <= pageNumbersWindow) {
     startPage = 0;
-    endPage = totalPages -1;
+    endPage = totalPages - 1;
   } else {
-    if (currentPage <= Math.floor(maxPagesToShow / 2) ) {
+    let pagesToShowBeforeAndAfter = Math.floor((pageNumbersWindow - 1) / 2);
+    if (pageNumbersWindow === 1) pagesToShowBeforeAndAfter = 0;
+
+    if (currentPage <= pagesToShowBeforeAndAfter) {
       startPage = 0;
-      endPage = maxPagesToShow - 1;
-    } else if (currentPage + Math.floor(maxPagesToShow / 2) >= totalPages -1) {
-      startPage = totalPages - maxPagesToShow;
+      endPage = pageNumbersWindow - 1;
+    } else if (currentPage + pagesToShowBeforeAndAfter >= totalPages - 1) {
+      startPage = totalPages - pageNumbersWindow;
       endPage = totalPages - 1;
     } else {
-      startPage = currentPage - Math.floor(maxPagesToShow / 2);
-      endPage = currentPage + Math.floor(maxPagesToShow / 2);
+      startPage = currentPage - pagesToShowBeforeAndAfter;
+      endPage = currentPage + pagesToShowBeforeAndAfter;
     }
+    endPage = Math.min(endPage, totalPages - 1);
   }
 
+
+  const pageButtons = [];
   for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
+    pageButtons.push(i);
   }
 
+  const buttonBaseClass = "flex items-center justify-center px-2 py-1.5 sm:px-2.5 sm:py-1.5 text-xs sm:text-sm border border-border-medium rounded-md transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-1 focus:ring-accent";
+  const activeClass = "bg-primary text-text-on-primary border-primary hover:bg-primary-dark font-bold";
+  const inactiveClass = "bg-bg-content text-text-main hover:bg-gray-100";
+  const textButtonClass = "font-semibold";
 
   return (
-    <nav aria-label="Page navigation" className="flex justify-center items-center space-x-1 sm:space-x-2 my-8">
+    <nav aria-label="Page navigation" className="flex justify-center items-center space-x-1 sm:space-x-1.5 my-8 sm:my-10">
+      {!isVerySmallScreen && (
+        <>
+          <button
+            onClick={() => handlePageClick(0)}
+            disabled={currentPage === 0 || isFetching}
+            className={`${buttonBaseClass} ${inactiveClass}`}
+            aria-label="Go to first page"
+            title="First"
+          >
+            <FaAngleDoubleLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+            <span className={`hidden sm:inline ml-1 ${textButtonClass}`}>First</span>
+          </button>
+        </>
+      )}
       <button
-        onClick={() => onPageChange(0)}
+        onClick={() => handlePageClick(currentPage - 1)}
         disabled={currentPage === 0 || isFetching}
-        className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className={`${buttonBaseClass} ${inactiveClass}`}
+        aria-label="Go to previous page"
+        title="Previous"
       >
-        First
-      </button>
-      <button
-        onClick={handlePrev}
-        disabled={currentPage === 0 || isFetching}
-        className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span className="sr-only">Previous</span>
-        «
+        <FaChevronLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
       </button>
 
-      {startPage > 0 && (
-         <span className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-700">...</span>
+      {startPage > 0 && !isVerySmallScreen && (
+        <span className="px-1 py-1.5 sm:px-1.5 sm:py-2 text-xs sm:text-sm text-text-secondary font-semibold">...</span>
       )}
 
-      {pageNumbers.map((page) => (
+      {pageButtons.map((page) => (
         <button
           key={page}
-          onClick={() => onPageChange(page)}
+          onClick={() => handlePageClick(page)}
           disabled={isFetching}
-          className={`px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50
-            ${currentPage === page ? 'bg-primary text-white border-primary hover:bg-red-700' : 'text-gray-700 bg-white'}`}
+          className={`${buttonBaseClass} ${currentPage === page ? activeClass : `${inactiveClass} ${textButtonClass}`}`}
+          aria-current={currentPage === page ? 'page' : undefined}
+        
         >
           {page + 1}
         </button>
       ))}
 
-      {endPage < totalPages -1 && (
-         <span className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-700">...</span>
+      {endPage < totalPages - 1 && !isVerySmallScreen && (
+        <span className="px-1 py-1.5 sm:px-1.5 sm:py-2 text-xs sm:text-sm text-text-secondary font-semibold">...</span>
       )}
 
       <button
-        onClick={handleNext}
+        onClick={() => handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages - 1 || isFetching}
-        className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className={`${buttonBaseClass} ${inactiveClass}`}
+        aria-label="Go to next page"
+        title="Next"
       >
-        <span className="sr-only">Next</span>
-        »
+        <FaChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
       </button>
-       <button
-        onClick={() => onPageChange(totalPages - 1)}
-        disabled={currentPage === totalPages - 1 || isFetching}
-        className="px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Last
-      </button>
+      {!isVerySmallScreen && (
+        <>
+          <button
+            onClick={() => handlePageClick(totalPages - 1)}
+            disabled={currentPage === totalPages - 1 || isFetching}
+            className={`${buttonBaseClass} ${inactiveClass}`}
+            aria-label="Go to last page"
+            title="Last"
+          >
+            <span className={`hidden sm:inline mr-1 ${textButtonClass}`}>Last</span>
+            <FaAngleDoubleRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+          </button>
+        </>
+      )}
     </nav>
   );
 };

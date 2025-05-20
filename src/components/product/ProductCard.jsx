@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
             {product.title}
           </h3>
         </Link>
-        <p className="text-xs sm:text-sm text-text-secondary mb-3 h-10 line-clamp-2">
+        <p className="text-xs sm:text-sm text-text-secondary mb-3 h-fit line-clamp-2">
           {product.description}
         </p>
 
