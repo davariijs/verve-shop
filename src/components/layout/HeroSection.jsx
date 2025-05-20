@@ -47,7 +47,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="bg-primary w-full overflow-hidden group"> 
+    <div className="bg-primary w-full min-h-screen lg:min-h-0 overflow-hidden group"> 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between py-12 md:py-16 lg:py-20 xl:py-24 relative min-h-[400px] sm:min-h-[450px] lg:min-h-0">
           <div className="lg:w-1/2 xl:w-5/12 text-center lg:text-left mb-10 lg:mb-0 z-20 relative">
