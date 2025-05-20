@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FiX, FiZoomIn, FiZoomOut, FiMove } from 'react-icons/fi';
 
 const ImageMagnifier = ({ imageUrl, onClose }) => {
@@ -20,20 +20,20 @@ const ImageMagnifier = ({ imageUrl, onClose }) => {
     }
   };
 
-  const handleMouseMove = (e) => {
-    if (isDragging && imageRef.current) {
+const handleMouseMove = useCallback((e) => {
+    if (isDragging && imageRef.current) { 
       e.preventDefault();
       const newX = e.clientX - startDrag.x;
       const newY = e.clientY - startDrag.y;
       setPosition({ x: newX, y: newY });
     }
-  };
+  }, [isDragging, startDrag, setPosition]);
 
-  const handleMouseUpOrLeave = () => {
+  const handleMouseUpOrLeave = useCallback(() => {
     if (isDragging) {
         setIsDragging(false);
     }
-  };
+  }, [isDragging, setIsDragging]);
   
   const handleWheelZoom = (e) => {
     if (containerRef.current && containerRef.current.contains(e.target)) {
