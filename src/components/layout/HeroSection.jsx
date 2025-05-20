@@ -60,7 +60,8 @@ const HeroSection = () => {
             <div className="mt-6 sm:mt-8">
               <button
                 onClick={handleSmoothScrollToProducts}
-                className="inline-block bg-bg-content text-primary font-semibold px-6 py-2.5 sm:px-8 sm:py-3 rounded-full text-base sm:text-lg hover:bg-gray-100 shadow-lg transform transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-75"
+                className="inline-block bg-bg-content text-primary font-semibold px-6 py-2.5 sm:px-8 sm:py-3 rounded-full text-base sm:text-lg hover:bg-gray-100 shadow-lg 
+                transform transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-75"
               >
                 Shop Now
               </button>

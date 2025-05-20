@@ -54,7 +54,9 @@ const CategoryDropdown = ({
       <div>
         <button
           type="button"
-          className={`inline-flex justify-between items-center w-full rounded-full border border-border-medium shadow-sm px-4 py-3 bg-bg-content text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-accent disabled:opacity-70 disabled:cursor-not-allowed transition-colors ${buttonClassName}`}
+          className={`inline-flex justify-between items-center w-full rounded-full border border-border-medium shadow-sm px-4 py-3
+            bg-bg-content text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1
+            focus:ring-accent disabled:opacity-70 disabled:cursor-not-allowed transition-colors ${buttonClassName}`}
           id="category-menu-button"
           aria-expanded={isOpen}
           aria-haspopup="true"
@@ -75,7 +77,8 @@ const CategoryDropdown = ({
 
       {isOpen && (
         <div
-          className={`origin-top absolute mt-14 md:-mr-4 -mr-0 w-64 sm:w-72 rounded-md shadow-xl bg-bg-content ring-1 ring-black ring-opacity-5 focus:outline-none z-30 max-h-80 overflow-y-auto custom-scrollbar py-1 
+          className={`origin-top absolute mt-14 md:-mr-4 -mr-0 w-64 sm:w-72 rounded-md shadow-xl bg-bg-content ring-1 ring-black
+            ring-opacity-5 focus:outline-none z-30 max-h-80 overflow-y-auto custom-scrollbar py-1 
                       right-1/2 translate-x-1/2 md:right-0 md:left-auto md:translate-x-0`}
           role="menu"
           aria-orientation="vertical"

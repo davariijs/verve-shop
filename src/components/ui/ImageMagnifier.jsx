@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FiX, FiZoomIn, FiZoomOut, FiMove } from 'react-icons/fi';
 
 const ImageMagnifier = ({ imageUrl, onClose }) => {
@@ -20,20 +20,20 @@ const ImageMagnifier = ({ imageUrl, onClose }) => {
     }
   };
 
-  const handleMouseMove = (e) => {
-    if (isDragging && imageRef.current) {
+const handleMouseMove = useCallback((e) => {
+    if (isDragging && imageRef.current) { 
       e.preventDefault();
       const newX = e.clientX - startDrag.x;
       const newY = e.clientY - startDrag.y;
       setPosition({ x: newX, y: newY });
     }
-  };
+  }, [isDragging, startDrag, setPosition]);
 
-  const handleMouseUpOrLeave = () => {
+  const handleMouseUpOrLeave = useCallback(() => {
     if (isDragging) {
         setIsDragging(false);
     }
-  };
+  }, [isDragging, setIsDragging]);
   
   const handleWheelZoom = (e) => {
     if (containerRef.current && containerRef.current.contains(e.target)) {
@@ -103,8 +103,10 @@ const ImageMagnifier = ({ imageUrl, onClose }) => {
         />
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-2 bg-black/60 p-2 rounded-full z-20">
-          <button onClick={handleZoomOut} disabled={zoomLevel <= 0.5} className="p-1.5 text-white disabled:text-gray-500 hover:bg-white/20 rounded-full focus:outline-none focus:ring-1 focus:ring-white"><FiZoomOut size={20} /></button>
-          <button onClick={handleZoomIn} disabled={zoomLevel >= 3} className="p-1.5 text-white disabled:text-gray-500 hover:bg-white/20 rounded-full focus:outline-none focus:ring-1 focus:ring-white"><FiZoomIn size={20} /></button>
+          <button onClick={handleZoomOut} disabled={zoomLevel <= 0.5} className="p-1.5 text-white disabled:text-gray-500 hover:bg-white/20 rounded-full focus:outline-none 
+          focus:ring-1 focus:ring-white"><FiZoomOut size={20} /></button>
+          <button onClick={handleZoomIn} disabled={zoomLevel >= 3} className="p-1.5 text-white disabled:text-gray-500 hover:bg-white/20 rounded-full focus:outline-none
+          focus:ring-1 focus:ring-white"><FiZoomIn size={20} /></button>
           {zoomLevel > 1 && <FiMove size={18} className="text-white" title="Drag to move"/>}
         </div>
       </div>

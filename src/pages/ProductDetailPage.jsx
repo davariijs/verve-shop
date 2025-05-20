@@ -86,7 +86,8 @@ const ProductDetailPage = () => {
           </div>
         )}
         
-        <div className={`bg-bg-content shadow-2xl rounded-2xl overflow-hidden md:grid md:grid-cols-12 md:gap-x-4 lg:gap-x-8 items-start transition-opacity duration-300 ease-in-out ${isSuccess && product ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`bg-bg-content shadow-2xl rounded-2xl overflow-hidden md:grid md:grid-cols-12 md:gap-x-4 lg:gap-x-8 items-start
+          transition-opacity duration-300 ease-in-out ${isSuccess && product ? 'opacity-100' : 'opacity-0'}`}>
           <div className="md:col-span-7 lg:col-span-7 p-4 sm:p-6">
             <ProductImageGallery 
                 images={product.images || []} 
@@ -110,7 +111,8 @@ const ProductDetailPage = () => {
                     <span className="ml-2 text-xs sm:text-sm text-text-secondary">({product.rating?.toFixed(1)} from {product.reviews?.length || 0} reviews)</span>
                 </div>
 
-                <p className="text-text-secondary mb-3 text-xs sm:text-sm leading-relaxed max-h-[60px] sm:max-h-[72px] line-clamp-3 hover:line-clamp-none transition-all overflow-hidden hover:overflow-visible">
+                <p className="text-text-secondary mb-3 text-xs sm:text-sm leading-relaxed max-h-[60px] sm:max-h-[72px] line-clamp-3
+                hover:line-clamp-none transition-all overflow-hidden hover:overflow-visible">
                     {product.description}
                 </p>
 
@@ -139,9 +141,12 @@ const ProductDetailPage = () => {
                 </div>
                 
                 <div className="space-y-1 text-xs mb-3">
-                    {product.shippingInformation && <div className="flex items-start"><FaShippingFast className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 flex-shrink-0" /><span className="text-text-secondary">{product.shippingInformation}</span></div>}
-                    {product.returnPolicy && <div className="flex items-start"><FaUndo className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 flex-shrink-0" /><span className="text-text-secondary">{product.returnPolicy}</span></div>}
-                    {product.warrantyInformation && <div className="flex items-start"><FaShieldAlt className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 flex-shrink-0" /><span className="text-text-secondary">{product.warrantyInformation}</span></div>}
+                    {product.shippingInformation && <div className="flex items-start"><FaShippingFast className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 
+                    flex-shrink-0" /><span className="text-text-secondary">{product.shippingInformation}</span></div>}
+                    {product.returnPolicy && <div className="flex items-start"><FaUndo className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 flex-shrink-0" />
+                    <span className="text-text-secondary">{product.returnPolicy}</span></div>}
+                    {product.warrantyInformation && <div className="flex items-start"><FaShieldAlt className="w-3.5 h-3.5 mr-1.5 mt-0.5 text-gray-500 flex-shrink-0" />
+                    <span className="text-text-secondary">{product.warrantyInformation}</span></div>}
                 </div>
 
                 {product.tags && product.tags.length > 0 && (

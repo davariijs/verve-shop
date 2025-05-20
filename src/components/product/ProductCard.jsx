@@ -12,7 +12,8 @@ const ProductCard = ({ product }) => {
     : product.price;
 
   return (
-    <div className="bg-bg-content rounded-xl shadow-lg overflow-hidden flex flex-col group transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 h-full">
+    <div className="bg-bg-content rounded-xl shadow-lg overflow-hidden flex flex-col group transform transition-all 
+    duration-300 hover:shadow-2xl hover:-translate-y-1.5 h-full">
       <Link to={`/products/${product.id}`} className="block relative">
         <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-white"> 
           <img
@@ -50,7 +51,8 @@ const ProductCard = ({ product }) => {
               )}
             </div>
             <button 
-              className="p-2 bg-gray-100 rounded-full text-primary hover:bg-gray-200 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50 transition-colors"
+              className="p-2 bg-gray-100 rounded-full text-primary hover:bg-gray-200 hover:text-accent focus:outline-none focus:ring-2
+              focus:ring-accent focus:ring-opacity-50 transition-colors"
               aria-label="Add to cart"
               onClick={(e) => { 
                 e.preventDefault(); 
