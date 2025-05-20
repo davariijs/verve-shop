@@ -15,7 +15,7 @@ const ProductFilters = ({
   return (
     <div className="mb-6 md:mb-8 p-4 bg-bg-content shadow-md rounded-lg">
       <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
-        <div className="flex-grow md:w-auto order-1">
+        <div className="flex-grow md:w-auto order-1 flex">
           <label htmlFor="product-search-input" className="sr-only">Search products</label>
           <div className="relative flex items-stretch w-full rounded-full shadow-sm 
                         border border-border-medium 
@@ -27,7 +27,7 @@ const ProductFilters = ({
               placeholder="Search for products..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="block w-full pl-5 pr-12 sm:pr-14 py-3 text-sm text-text-main 
+              className="block w-full pl-5 pr-1 sm:pr-14 py-3 text-sm text-text-main 
                          border-none rounded-l-full bg-transparent 
                          focus:outline-none focus:ring-0"
             />
@@ -46,13 +46,15 @@ const ProductFilters = ({
           </div>
         </div>
 
-        <div className="flex-shrink-0 md:w-auto w-full order-2">
+        <div className="flex-shrink-0 w-full md:w-auto order-2 flex justify-center items-stretch sm:justify-center md:justify-start">
           <CategoryDropdown
             categories={categories}
             selectedCategory={selectedCategory}
             onSelectCategory={onCategoryChange}
             isLoadingCategories={isLoadingCategories}
             buttonLabel="All Categories"
+            className="w-auto flex"
+            buttonClassName="h-full"
           />
         </div>
       </div>
