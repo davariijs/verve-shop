@@ -27,7 +27,7 @@ const ProductListPage = () => {
     clearFilters,
   } = useProductManagement();
 
-   const smoothScrollTo = (elementId, duration = 700, offset = 80) => {
+  const smoothScrollTo = (elementId, duration = 700, offset = 80) => {
     const targetElement = document.getElementById(elementId);
     if (targetElement) {
       const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
@@ -89,7 +89,7 @@ const ProductListPage = () => {
       
       <HeroSection />
       <main className="flex-grow">
-        <div id="product-list-section" className="container mx-auto p-4 sm:p-6 lg:p-8 mb-28 mt-20">
+        <div id="product-list-section" className="container mx-auto p-4 sm:p-6 lg:p-8 mb-28 md:mt-14 mt-10">
           <header className="mb-6 text-center md:text-left">
             <h1 className="text-2xl pb-5  text-center sm:text-3xl font-bold text-text-main">
               Fresh Picks & Hot Finds
