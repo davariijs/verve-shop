@@ -165,7 +165,7 @@ const ProductImageGallery = ({
             )}
             <div 
                 ref={thumbnailsContainerRef}
-                className="flex space-x-2 pt-2 sm:space-x-3 overflow-x-auto pb-2 custom-scrollbar justify-start sm:justify-center px-8" 
+                className="flex space-x-2 pt-2 sm:space-x-3 overflow-x-auto pb-2 custom-scrollbar justify-center px-8" 
             >
             {displayImages.map((img, index) => (
                 <button
