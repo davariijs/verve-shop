@@ -145,7 +145,6 @@ const ProductImageGallery = ({
             <FiMaximize size={18} />
         </button>
       </div>
-      
       {displayImages.length > 0 && (
         <div className="relative mt-6 sm:max-w-[500px] max-w-full">
             {showScrollArrows && displayImages.length > 4 && (
