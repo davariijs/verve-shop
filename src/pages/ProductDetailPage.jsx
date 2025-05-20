@@ -111,8 +111,8 @@ const ProductDetailPage = () => {
                     <span className="ml-2 text-xs sm:text-sm text-text-secondary">({product.rating?.toFixed(1)} from {product.reviews?.length || 0} reviews)</span>
                 </div>
 
-                <p className="text-text-secondary mb-3 text-xs sm:text-sm leading-relaxed max-h-[60px] sm:max-h-[72px] line-clamp-3
-                hover:line-clamp-none transition-all overflow-hidden hover:overflow-visible">
+                <p className="text-text-secondary mb-3 text-xs sm:text-sm leading-relaxed 
+                ">
                     {product.description}
                 </p>
 
