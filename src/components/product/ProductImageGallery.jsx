@@ -91,7 +91,7 @@ const ProductImageGallery = ({
 
   if (displayImages.length === 0) { 
     return (
-      <div className={`relative aspect-w-1 aspect-h-1 w-full max-h-[450px] sm:max-h-[500px] rounded-lg overflow-hidden bg-gray-200 ${className}`}>
+      <div className={`relative aspect-w-1 aspect-h-1 sm:max-w-[500px] max-w-full  rounded-lg overflow-hidden bg-gray-200 ${className}`}>
         <div className="flex items-center justify-center h-full text-gray-400 text-sm">No Image Available</div>
       </div>
     );
@@ -100,7 +100,7 @@ const ProductImageGallery = ({
   return (
     <div className={className}>
       <div 
-        className={`relative aspect-w-1 aspect-h-1 w-full max-h-[450px] sm:max-h-[500px] rounded-lg overflow-hidden mb-4 group bg-white shadow-inner`}
+        className={`relative aspect-w-1 aspect-h-1 sm:max-w-[500px] max-w-full rounded-lg overflow-hidden mb-4 group bg-white shadow-inner`}
       >
         {!isMainImageLoaded && selectedImage && (
             <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
@@ -145,9 +145,8 @@ const ProductImageGallery = ({
             <FiMaximize size={18} />
         </button>
       </div>
-      
       {displayImages.length > 0 && (
-        <div className="relative mt-6">
+        <div className="relative mt-6 sm:max-w-[500px] max-w-full">
             {showScrollArrows && displayImages.length > 4 && (
                 <>
                     <button 

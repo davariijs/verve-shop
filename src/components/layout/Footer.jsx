@@ -9,7 +9,7 @@ const Footer = ({ storeName = "Verve" }) => {
     <footer className="bg-bg-dark text-text-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
-          <div className="md:col-span-1 lg:col-span-1">
+          <div className="md:col-span-1 lg:col-span-1 text-center md:text-left">
             <Link to="/" className="text-2xl font-extrabold text-white hover:opacity-80 transition-opacity">
               {storeName}
             </Link>
@@ -18,7 +18,7 @@ const Footer = ({ storeName = "Verve" }) => {
             </p>
           </div>
 
-          <div>
+          <div className='text-center md:text-left'>
             <h3 className="text-md font-semibold text-white uppercase tracking-wider mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors">All Products</Link></li>
@@ -28,7 +28,7 @@ const Footer = ({ storeName = "Verve" }) => {
             </ul>
           </div>
 
-          <div>
+          <div className='text-center md:text-left'>
             <h3 className="text-md font-semibold text-white uppercase tracking-wider mb-4">Popular Categories</h3>
             <ul className="space-y-2">
               <li><Link to="/products?category=electronics" className="text-gray-400 hover:text-white transition-colors">Electronics</Link></li>
@@ -38,9 +38,9 @@ const Footer = ({ storeName = "Verve" }) => {
             </ul>
           </div>
 
-          <div>
+          <div className='text-center md:text-left'>
             <h3 className="text-md font-semibold text-white uppercase tracking-wider mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 justify-center md:justify-start">
               <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
                 <FaFacebookF size={20} />
               </a>
