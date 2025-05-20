@@ -1,17 +1,13 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import ProductCardSkeleton from './ProductCardSkeleton';
+import Spinner from '../common/Spinner';
 
-const ProductGrid = ({ products, isLoading, itemsPerPage = 12, totalItems, currentPage }) => {
+const ProductGrid = ({ products, isLoading, totalItems }) => {
   
-  const skeletonCount = products.length > 0 && isLoading ? products.length : itemsPerPage;
-
   if (isLoading && products.length === 0) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-        {Array.from({ length: skeletonCount }).map((_, index) => (
-          <ProductCardSkeleton key={`skeleton-initial-${index}`} />
-        ))}
+      <div className="flex justify-center items-center py-10 col-span-full">
+        <Spinner size="lg" /> 
       </div>
     );
   }
@@ -26,15 +22,21 @@ const ProductGrid = ({ products, isLoading, itemsPerPage = 12, totalItems, curre
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-        {isLoading 
-          ? Array.from({ length: skeletonCount }).map((_, index) => (
-              <ProductCardSkeleton key={`skeleton-fetch-${index}`} />
-            ))
-          : products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+      {(!isLoading || products.length > 0) && totalItems > 0 && (
+        <p className="text-sm text-text-secondary mb-4">
+          Showing {products.length} of {totalItems} products.
+        </p>
+      )}
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 ${isLoading ? 'opacity-75' : ''}`}>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
+      {isLoading && products.length > 0 && (
+          <div className="flex justify-center py-4">
+              <Spinner size="md" />
+          </div>
+      )}
     </div>
   );
 };

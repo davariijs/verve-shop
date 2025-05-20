@@ -113,9 +113,7 @@ const ProductListPage = () => {
           <ProductGrid
             products={paginatedProducts}
             isLoading={isFetchingData}
-            itemsPerPage={12}
             totalItems={totalProductsFound}
-            currentPage={currentPage}
           />
           {totalPages > 1 && (
             <Pagination
