@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { FiMaximize, FiChevronLeft, FiChevronRight, FiChevronUp, FiChevronDown } from 'react-icons/fi';
+import { FiMaximize, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import ImageMagnifier from '../ui/ImageMagnifier';
 
 const ProductImageGallery = ({ 
@@ -16,8 +16,6 @@ const ProductImageGallery = ({
   const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
   const thumbnailsContainerRef = useRef(null);
-  const [showHorizontalScrollArrows, setShowHorizontalScrollArrows] = useState(false);
-  const [showVerticalScrollArrows, setShowVerticalScrollArrows] = useState(false);
 
   const selectedImage = useMemo(() => displayImages[currentIndex] || null, [displayImages, currentIndex]);
 
@@ -25,33 +23,6 @@ const ProductImageGallery = ({
     setCurrentIndex(0);
     setIsMainImageLoaded(false); 
   }, [displayImages]);
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (thumbnailsContainerRef.current) {
-        const { scrollWidth: hScrollWidth, clientWidth: hClientWidth } = thumbnailsContainerRef.current;
-        setShowHorizontalScrollArrows(hScrollWidth > hClientWidth);
-        const { scrollHeight: vScrollHeight, clientHeight: vClientHeight } = thumbnailsContainerRef.current;
-        setShowVerticalScrollArrows(vScrollHeight > vClientHeight);
-      } else {
-        setShowHorizontalScrollArrows(false);
-        setShowVerticalScrollArrows(false);
-      }
-    };
-
-    if (displayImages.length > 0) {
-        checkScroll();
-        const timer = setTimeout(checkScroll, 100);
-        window.addEventListener('resize', checkScroll);
-        return () => {
-            window.removeEventListener('resize', checkScroll);
-            clearTimeout(timer);
-        }
-    } else {
-        setShowHorizontalScrollArrows(false);
-        setShowVerticalScrollArrows(false);
-    }
-  }, [displayImages, currentIndex]);
 
 
   const handleThumbnailClick = (index) => {
@@ -68,18 +39,6 @@ const ProductImageGallery = ({
   const openZoomModal = () => {
     if (selectedImage) {
       setIsZoomModalOpen(true);
-    }
-  };
-
-  const scrollThumbnails = (direction, axis = 'horizontal') => {
-    if (thumbnailsContainerRef.current) {
-      if (axis === 'horizontal') {
-        const scrollAmount = direction === 'left' ? -100 : 100;
-        thumbnailsContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      } else {
-        const scrollAmount = direction === 'up' ? -88 : 88;
-        thumbnailsContainerRef.current.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-      }
     }
   };
   
@@ -106,8 +65,8 @@ const ProductImageGallery = ({
   }
   
   return (
-    <div className={`lg:grid lg:grid-cols-12 lg:gap-x-3 ${className}`}>
-      <div className="lg:col-span-10 relative">
+    <div className={`lg:grid lg:grid-cols-12 ${className}`}>
+      <div className="lg:col-span-9 md:col-span-8 relative">
         <div 
           className={`relative aspect-w-1 aspect-h-1 w-full md:max-w-[500px] lg:max-w-none max-w-full rounded-lg overflow-hidden mb-4 lg:mb-0 group bg-white shadow-inner`}
         >
@@ -130,14 +89,14 @@ const ProductImageGallery = ({
           {displayImages.length > 1 && isMainImageLoaded && (
               <>
                   <button 
-                      className="absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
+                      className="absolute top-1/2 left-2 -translate-y-1/2 md:p-2 p-1 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
                       onClick={(e) => {e.stopPropagation(); selectPreviousImage();}}
                       title="Previous image" aria-label="Previous image"
                   >
                       <FiChevronLeft size={20} />
                   </button>
                   <button 
-                      className="absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
+                      className="absolute top-1/2 right-2 -translate-y-1/2 md:p-2 p-1 bg-black/40 text-white rounded-full transition-opacity duration-200 cursor-pointer hover:bg-black/60 focus:outline-none z-10 opacity-70 hover:opacity-100"
                       onClick={(e) => {e.stopPropagation(); selectNextImage();}}
                       title="Next image" aria-label="Next image"
                   >
@@ -157,18 +116,10 @@ const ProductImageGallery = ({
       </div>
       
       {displayImages.length > 0 && (
-        <div className="lg:col-span-2 relative mt-4 lg:mt-0 flex lg:flex-col items-center">
-          {showVerticalScrollArrows && displayImages.length > 4 && (
-            <button 
-                onClick={() => scrollThumbnails('up', 'vertical')} 
-                className="hidden lg:block absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-1 bg-white/70 hover:bg-white p-1 rounded-full shadow-md z-20" 
-                aria-label="Scroll thumbnails up">
-                <FiChevronUp size={18} className="text-gray-600"/>
-            </button>
-          )}
+        <div className="lg:col-span-3 md:col-span-4 relative mt-4 lg:mt-0 flex lg:flex-col items-center">
           <div 
               ref={thumbnailsContainerRef}
-              className="flex justify-center lg:flex-col space-x-2 pt-2  mx-2 mt-2 lg:space-x-0 lg:space-y-2 
+              className="flex justify-start lg:flex-col space-x-2 pt-2  mx-2 mt-2 lg:space-x-0 lg:space-y-2 
                         overflow-x-auto lg:overflow-x-hidden lg:overflow-y-hidden 
                         pb-2 lg:pb-0 lg:pt-0 lg:max-h-[450px] custom-scrollbar 
                         lg:justify-start w-full lg:items-center"
@@ -186,21 +137,6 @@ const ProductImageGallery = ({
                 </button>
             ))}
           </div>
-          {showVerticalScrollArrows && displayImages.length > 4 && (
-            <button 
-                onClick={() => scrollThumbnails('down', 'vertical')} 
-                className="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-1 bg-white/70 hover:bg-white p-1 rounded-full shadow-md z-20" 
-                aria-label="Scroll thumbnails down">
-                <FiChevronDown size={18} className="text-gray-600"/>
-            </button>
-          )}
-
-          {showHorizontalScrollArrows && displayImages.length > 4 && (
-            <div className="lg:hidden flex justify-between items-center w-full mt-2 px-1">
-                <button onClick={() => scrollThumbnails('left', 'horizontal')} className="bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md" aria-label="Scroll thumbnails left"><FiChevronLeft size={18} className="text-gray-700"/></button>
-                <button onClick={() => scrollThumbnails('right', 'horizontal')} className="bg-white/70 hover:bg-white p-1.5 rounded-full shadow-md" aria-label="Scroll thumbnails right"><FiChevronRight size={18} className="text-gray-700"/></button>
-            </div>
-          )}
         </div>
       )}
 
